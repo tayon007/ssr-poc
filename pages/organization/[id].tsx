@@ -7,7 +7,7 @@ export default function EditUser ({organization}) {
     // const { id } = useRouter().query;
  
     return (
-        <div data-align="center">
+        <div>
             <h1>Edit {organization.name}</h1>
             <br />
             <section>
