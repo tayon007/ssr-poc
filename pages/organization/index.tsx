@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ManageOrgs } from "../api/Organizations";
-import Link from 'next/link';
 import {
   Table,
   TableBody,
