@@ -12,20 +12,20 @@ import { manageOrgTableColumns } from "../../utils/constants";
 
 export default function Home({ organizations }) {
   
-  const [organizationData, setOrganizationData] = useState(organizations);
-  const [organizationQueryParams, setOrganizationQueryParams] = useState('?pageIndex=0&limit=10&search=');
+  //const [organizationData, setOrganizationData] = useState(organizations);
+  //const [organizationQueryParams, setOrganizationQueryParams] = useState('?pageIndex=0&limit=10&search=');
   
-  const handlePage = (value) => {
-    setOrganizationQueryParams(`?pageIndex=${value}&limit=10&search=`);
-  }
+  // const handlePage = (value) => {
+  //   setOrganizationQueryParams(`?pageIndex=${value}&limit=10&search=`);
+  // }
 
- useEffect(() => {
-  async function fetchData(){
-    const response = await ManageOrgs(organizationQueryParams);
-    setOrganizationData(response);
-  }
-  fetchData()
- }, [organizationQueryParams])
+//  useEffect(() => {
+//   async function fetchData(){
+//     const response = await ManageOrgs(organizationQueryParams);
+//     setOrganizationData(response);
+//   }
+//   fetchData()
+//  }, [organizationQueryParams])
 
 
   const displayCellData = (colID, rowData) => {
@@ -58,7 +58,7 @@ export default function Home({ organizations }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {organizationData.items.map((row) => {
+            {organizations.items.map((row) => {
               return (
                 <TableRow hover tabIndex={-1} key={row.id}>
                   {
@@ -80,13 +80,13 @@ export default function Home({ organizations }) {
           </TableBody>
         </Table>
         <br />
-        <div data-align="center">
+        {/* <div data-align="center">
           {organizationQueryParams.includes('=0') ? (
             <Button variant="contained" onClick={() => handlePage('1')}>Next Page</Button>
           ): (
             <Button variant="contained" onClick={() => handlePage('0')}>Previous Page</Button>
           )}
-        </div>
+        </div> */}
       </>
     )
   }
@@ -100,11 +100,11 @@ export default function Home({ organizations }) {
   //   }
   // }
   export async function getStaticProps() {
-    const organizations = await ManageOrgs('?pageIndex=0&limit=10&search=');
+    const organizations = await fetch(`http://localhost:8090/api/organization-list?pageIndex=0&limit=10&search=`)
     return {
       props: {
-        organizations
-      }
-    }
+        organizations: await organizations.json(),
+      },
+    };
   }
 

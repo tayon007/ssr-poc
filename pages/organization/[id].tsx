@@ -51,17 +51,18 @@ export default function EditUser ({organization}) {
 export async function getStaticProps(context) {
     const { params } = context;
     const { id } = params;
-    const organization = await ManageOrgById(Number(id));
+    const organization = await fetch(`http://localhost:8090/api/organizations/${id}`);
     return {
       props: {
-        organization
+        organization: await organization.json()
       },
       revalidate: 60000,
     }
 }
 
 export async function getStaticPaths() {
-    const organizations = await ManageOrgs('?pageIndex=0&limit=10&search=');
+    const response = await fetch(`http://localhost:8090/api/organization-list?pageIndex=0&limit=10&search=`)
+    const organizations = await response.json();
     return {
       paths: organizations.items.map(org => ({
           params: { id: org.id.toString() },
